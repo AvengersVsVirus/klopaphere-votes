@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: {{ .Values.global.name | lower | quote }}
+  labels:
+    app: {{ .Values.global.name | lower | quote }}
+spec:
+  tags:
+    - annotations: null
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: Source

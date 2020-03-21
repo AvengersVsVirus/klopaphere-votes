@@ -1,0 +1,75 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: {{ .Values.global.name | quote }}
+  labels:
+    app: {{ .Values.global.name | lower | quote }}
+spec:
+  replicas: {{ .Values.deploymentConfig.replicaCount }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit | default 10 }}
+  selector:
+    deploymentConfig: {{ .Values.global.name | quote }}
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: {{ .Values.global.managedBy | quote }}
+      labels:
+        deploymentConfig: {{ .Values.global.name | quote }}
+      name: {{ .Values.global.name | quote }}
+    spec:
+      containers:
+        - env:
+            {{- with .Values.deploymentConfig.env }}
+{{ toYaml . | indent 12 }}
+            {{- end }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.deploymentConfig.readinessProbe.path }}
+              port: {{ .Values.deploymentConfig.readinessProbe.port }}
+            initialDelaySeconds: {{ .Values.deploymentConfig.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.deploymentConfig.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.deploymentConfig.readinessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.deploymentConfig.readinessProbe.failureThreshold }}
+            successThreshold: {{ .Values.deploymentConfig.readinessProbe.successThreshold }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.deploymentConfig.livenessProbe.path }}
+              port: {{ .Values.deploymentConfig.livenessProbe.port }}
+            initialDelaySeconds: {{ .Values.deploymentConfig.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.deploymentConfig.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.deploymentConfig.livenessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.deploymentConfig.livenessProbe.failureThreshold }}
+            successThreshold: {{ .Values.deploymentConfig.livenessProbe.successThreshold }}
+          name: {{ .Values.global.name | quote }}
+          ports:
+          - containerPort: {{ .Values.deploymentConfig.port }}
+            protocol: TCP
+          resources:
+            limits:
+              cpu: {{ .Values.deploymentConfig.resourceLimitCpu | default "1" }}
+              memory:  {{ .Values.deploymentConfig.resourceLimitRam | default "1200Mi" }}
+            requests:
+              cpu:  {{ .Values.deploymentConfig.resourceRequestCpu | default "250m" }}
+              memory:  {{ .Values.deploymentConfig.resourceRequestRam | default "800Mi" }}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - {{ .Values.global.name | quote }}
+        from:
+          kind: ImageStreamTag
+          name: '{{ .Values.global.name | lower }}:latest'
+      type: ImageChange
