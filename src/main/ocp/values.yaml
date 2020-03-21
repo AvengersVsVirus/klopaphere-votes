@@ -4,6 +4,15 @@ global:
 
 deploymentConfig:
   env:
+    - name: KAFKA_HOST
+      value: 'https://kafka.apps.ocp4.keithtenzer.com'
+    - name: KAFKA_USER
+      value: 'klopaphere'
+    - name: KAFKA_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: klopaphere
+          key: password
     - name: APP_DESCRIPTION
       value: "klopaphere-votes"
     - name: DB_HOST
