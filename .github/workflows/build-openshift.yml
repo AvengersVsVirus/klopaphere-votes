@@ -40,7 +40,7 @@ jobs:
     - name: Kubernetes toolset
       uses: stefanprodan/kube-tools@v1.3.0
       with:
-        command: helm template src/main/ocp > ocp_objects.yaml
+        command: helmv3 template src/main/ocp > ocp_objects.yaml
     - name: apply manifest to openshift
       uses: redhat-developer/openshift-actions@v2.0
       with:
