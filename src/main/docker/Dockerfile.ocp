@@ -2,4 +2,6 @@ FROM registry.redhat.io/ubi8/ubi-minimal:latest
 EXPOSE 8080
 USER 1001
 
+ADD application ./application
+
 CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
