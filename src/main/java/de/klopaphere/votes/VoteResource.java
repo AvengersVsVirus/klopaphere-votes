@@ -14,8 +14,12 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class VoteResource {
 
-    @POST
-    public Vote vote(@Valid Vote voting) {
-        return Vote.builder().availability(Availability.NORMAL).product("Klopapier").location("53.6159766,9.9022919").build();
-    }
+  @POST
+  public Vote vote(@Valid Vote voting) {
+    return Vote.builder()
+        .availability(Availability.NORMAL)
+        .product("Klopapier")
+        .location("53.6159766,9.9022919")
+        .build();
+  }
 }

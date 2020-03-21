@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 @QuarkusTest
 public class VoteResourceTest {
 
-    @Test
-    public void testVoteEndpoint() {
-    }
-
+  @Test
+  public void testVoteEndpoint() {}
 }
