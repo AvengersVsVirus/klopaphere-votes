@@ -1,0 +1,40 @@
+global:
+  name: "klopaphere-votes"
+  managedBy: "AvengersVsVirus"
+
+deploymentConfig:
+  env:
+    - name: APP_DESCRIPTION
+      value: "klopaphere-votes"
+  livenessProbe:
+    enabled: true
+    path: '/health/live'
+    port: 8080
+    failureThreshold: 3
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 2
+  readinessProbe:
+    enabled: true
+    path: '/health/ready'
+    port: 8080
+    failureThreshold: 3
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 2
+  replicaCount: 1
+  resourceRequestCpu: "250m"
+  resourceLimitCpu: "1"
+  resourceRequestRam: "800Mi"
+  resourceLimitRam: "1200Mi"
+  revisionHistoryLimit: 3
+  port: 8080
+
+buildConfig:
+  buildsHistoryLimits:
+    successful: 10
+    failed: 10
+  outputImageTag: latest
+  env: []

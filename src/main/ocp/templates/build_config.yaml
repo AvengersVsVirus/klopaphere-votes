@@ -1,0 +1,29 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: {{ .Values.global.name | lower | quote }}
+  labels:
+    app: {{ .Values.global.name | lower | quote }}
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: '{{ .Values.global.name }}:latest'
+  runPolicy: Serial
+  source:
+    contextDir: /
+    git:
+      ref: feature/vote
+      uri: 'git@github.com:AvengersVsVirus/klopaphere-votes.git'
+    type: Git
+  strategy:
+    dockerStrategy:
+      from:
+        kind: "DockerImage"
+        name: "openjdk:8"
+      noCache: true
+      dockerfilePath: src/main/docker/Dockerfile.ocp
+    type: Docker
+  triggers: []
+  successfulBuildsHistoryLimit: {{ .Values.buildConfig.buildsHistoryLimits.successful }}
+  failedBuildsHistoryLimit: {{ .Values.buildConfig.buildsHistoryLimits.failed }}
