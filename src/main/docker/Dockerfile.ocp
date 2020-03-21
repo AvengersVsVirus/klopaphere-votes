@@ -1,10 +1,9 @@
 FROM registry.redhat.io/ubi8/ubi-minimal:latest
-EXPOSE 8080
-USER 1001
 
 ADD application ./application
+ADD cacerts /work/cacerts
 
-RUN mkdir -p /work
-ADD config/cacerts /work/cacerts
+EXPOSE 8080
+USER 1001
 
 CMD ["./application", "-Dquarkus.http.host=0.0.0.0", "-Djavax.net.ssl.trustStore=/work/cacerts"]
