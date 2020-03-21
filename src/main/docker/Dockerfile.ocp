@@ -1,4 +1,4 @@
-Fmvn ROM registry.redhat.io/ubi8/ubi-minimal:latest
+FROM registry.redhat.io/ubi8/ubi-minimal:latest
 EXPOSE 8080
 USER 1001
 
