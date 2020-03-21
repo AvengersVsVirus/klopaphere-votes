@@ -19,7 +19,7 @@ spec:
         kind: "DockerImage"
         name: "openjdk:8"
       noCache: true
-      dockerfilePath: Dockerfile.ocp
+      dockerfilePath: Dockerfile.deprecated
     type: Docker
   triggers: []
   successfulBuildsHistoryLimit: {{ .Values.buildConfig.buildsHistoryLimits.successful }}

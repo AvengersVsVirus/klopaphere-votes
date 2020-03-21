@@ -1,16 +1,7 @@
-FROM openjdk:8
-
-ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
-
-COPY lib/* /deployments/lib/
-COPY klopaphere-votes.jar /deployments/klopaphere-votes.jar
-COPY kafka.cert /deployments/
-
-WORKDIR /deployments
-
-RUN keytool -import -v -alias kafka-cluster -file /deployments/kafka.cert -keystore /usr/local/openjdk-8/jre/lib/security/cacerts -noprompt -storepass changeit
-
+FROM registry.redhat.io/ubi8/ubi-minimal:latest
 EXPOSE 8080
 USER 1001
 
-CMD ["java", "-jar", "klopaphere-votes.jar"]
+ADD application ./application
+
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]

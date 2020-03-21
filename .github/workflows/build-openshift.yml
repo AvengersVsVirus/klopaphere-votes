@@ -5,7 +5,7 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ master, develop, feature/vote ]
+    branches: [ master, develop ]
   pull_request:
     branches: [ master, develop ]
 
@@ -14,14 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
-      with:
-        java-version: 1.8
     - name: Build a Quarkus native application
       uses: maxday/quarkus-native-build-docker-action@1
       with:
         outputName: klopaphere-vote
+    - name: make temporary folder
+      run: mkdir -p oc_deploy
+    - name: copy binary to tmp folder
+      run: cp klopaphere-vote oc_deploy/
+    - name: copy Dockerfile to tmp folder
+      run: cp src/main/docker/Dockerfile.ocp oc_deploy/
     - name: Start openshift build for applicaiton
       uses: redhat-developer/openshift-actions@v2.0
       with:
@@ -30,4 +32,15 @@ jobs:
         parameters: '{"apitoken": "${{ secrets.API_TOKEN }}", "acceptUntrustedCerts": "true"}'
         cmd: |
           'project klopaphere'
-          'start-build klopaphere-votes --from-file=klopaphere-vote'
+          'start-build klopaphere-votest-test --from-dir=oc_deploy --follow'
+    - name: Kubernetes toolset
+      uses: stefanprodan/kube-tools@v1.3.0
+      with:
+        command: helm3 template src/main/ocp > ocp_objects.yaml
+    - name: apply manifest to openshift
+      uses: redhat-developer/openshift-actions@v2.0
+      with:
+        # The URL of the Openshift cluster
+        openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
+        parameters: '{"apitoken": "${{ secrets.API_TOKEN }}", "acceptUntrustedCerts": "true"}'
+        cmd: 'apply -f ocp_objects.yaml'
