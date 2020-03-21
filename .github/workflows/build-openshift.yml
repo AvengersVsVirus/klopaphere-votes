@@ -33,9 +33,14 @@ jobs:
         cmd: |
           'project klopaphere'
           'start-build klopaphere-votest-test --from-dir=oc_deploy --follow'
-    - name: release helm chart to OpenShift
-      uses: deliverybot/helm@v1.5.0
+    - name: Kubernetes toolset
+      uses: stefanprodan/kube-tools@v1.3.0
       with:
-        release: votes
-        namespace: klopaphere
-        chart: src/main/ocp
+        command: helm3 template src/main/ocp > ocp_objects.yaml
+    - name: apply manifest to openshift
+      uses: redhat-developer/openshift-actions@v2.0
+      with:
+        # The URL of the Openshift cluster
+        openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
+        parameters: '{"apitoken": "${{ secrets.API_TOKEN }}", "acceptUntrustedCerts": "true"}'
+        cmd: 'apply -f ocp_objects.yaml'
