@@ -6,6 +6,23 @@ deploymentConfig:
   env:
     - name: APP_DESCRIPTION
       value: "klopaphere-votes"
+    - name: DB_HOST
+      value: 'mariadb'
+    - name: DB_USER
+      valueFrom:
+        secretKeyRef:
+          name: mariadb
+          key: database-user
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: mariadb
+          key: database-password
+    - name: DB_NAME
+      valueFrom:
+        secretKeyRef:
+          name: mariadb
+          key: database-name
   livenessProbe:
     enabled: true
     path: '/votes/health/live'
