@@ -1,4 +1,4 @@
-package de.klopaphere.votes;
+package de.klopaphere.votes.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
