@@ -14,4 +14,7 @@ GET http://127.0.0.1:8080/votes/openapi
 ### Mock Products
 GET http://127.0.0.1:8080/votes/product
 
+### Get All Votes
+GET http://127.0.0.1:8080/votes/vote
+
 ###
