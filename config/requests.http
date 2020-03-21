@@ -11,4 +11,7 @@ Content-Type: application/json
 ### OpenAPI Spec
 GET http://127.0.0.1:8080/votes/openapi
 
+### Mock Products
+GET http://127.0.0.1:8080/votes/product
+
 ###
