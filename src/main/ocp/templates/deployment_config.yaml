@@ -23,6 +23,9 @@ spec:
     spec:
       containers:
         - env:
+            {{- with .Values.deploymentConfig.env }}
+{{ toYaml . | indent 12 }}
+            {{- end }}
           readinessProbe:
             httpGet:
               path: {{ .Values.deploymentConfig.readinessProbe.path }}
