@@ -24,7 +24,6 @@ jobs:
       uses: maxday/quarkus-native-build-docker-action@1
       with:
         outputName: klopaphere-vote
-        dockerfilePath: src/main/docker/Dockerfile.native
     - name: Start openshift build for applicaiton
       uses: redhat-developer/openshift-actions@v2.0
       with:
