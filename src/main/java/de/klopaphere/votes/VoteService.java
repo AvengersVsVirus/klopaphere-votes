@@ -1,10 +1,9 @@
 package de.klopaphere.votes;
 
+import de.klopaphere.votes.model.VoteEntity;
 import java.util.Collection;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import de.klopaphere.votes.model.VoteEntity;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 

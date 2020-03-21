@@ -1,5 +1,8 @@
 package de.klopaphere.votes;
 
+import de.klopaphere.votes.model.Vote;
+import de.klopaphere.votes.model.VoteCollection;
+import de.klopaphere.votes.model.VoteEntity;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.validation.Valid;
@@ -9,10 +12,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import de.klopaphere.votes.model.Vote;
-import de.klopaphere.votes.model.VoteCollection;
-import de.klopaphere.votes.model.VoteEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
