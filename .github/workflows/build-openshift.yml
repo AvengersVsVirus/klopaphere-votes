@@ -17,13 +17,17 @@ jobs:
     - name: Build a Quarkus native application
       uses: maxday/quarkus-native-build-docker-action@1
       with:
-        outputName: klopaphere-vote
+        outputName: application
     - name: make temporary folder
       run: mkdir -p oc_deploy
     - name: copy binary to tmp folder
-      run: cp klopaphere-vote oc_deploy/
+      run: cp application oc_deploy/
     - name: copy Dockerfile to tmp folder
       run: cp src/main/docker/Dockerfile.ocp oc_deploy/
+    - name: copy truststore to tmp folder
+      run: cp config/cacerts oc_deploy/
+    - name: copy truststore to tmp folder
+      run: ls -al oc_deploy
     - name: Start openshift build for applicaiton
       uses: redhat-developer/openshift-actions@v2.0
       with:
@@ -36,7 +40,7 @@ jobs:
     - name: Kubernetes toolset
       uses: stefanprodan/kube-tools@v1.3.0
       with:
-        command: helm3 template src/main/ocp > ocp_objects.yaml
+        command: helm template src/main/ocp > ocp_objects.yaml
     - name: apply manifest to openshift
       uses: redhat-developer/openshift-actions@v2.0
       with:
