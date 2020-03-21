@@ -11,9 +11,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
@@ -31,6 +29,5 @@ jobs:
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
         parameters: '{"apitoken": "${{ secrets.API_TOKEN }}", "acceptUntrustedCerts": "true"}'
         cmd: |
-          'start-build'
-          'klopaphere-votes'
-          '--from-file=klopaphere-vote'
+          'project klopaphere'
+          'start-build klopaphere-votes --from-file=klopaphere-vote'
