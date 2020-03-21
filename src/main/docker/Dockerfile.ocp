@@ -1,12 +1,5 @@
-FROM openjdk:8
-
-ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
-
-COPY lib/* /deployments/lib/
-COPY klopaphere-votes.jar /deployments/klopaphere-votes.jar
-WORKDIR /deployments
-
+Fmvn ROM registry.redhat.io/ubi8/ubi-minimal:latest
 EXPOSE 8080
 USER 1001
 
-CMD ["java", "-jar", "klopaphere-votes.jar"]
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
