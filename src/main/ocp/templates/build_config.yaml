@@ -11,18 +11,15 @@ spec:
       name: '{{ .Values.global.name }}:latest'
   runPolicy: Serial
   source:
-    contextDir: /
-    git:
-      ref: feature/vote
-      uri: 'git@github.com:AvengersVsVirus/klopaphere-votes.git'
-    type: Git
+    binary: {}
+    type: Binary
   strategy:
     dockerStrategy:
       from:
         kind: "DockerImage"
         name: "openjdk:8"
       noCache: true
-      dockerfilePath: src/main/docker/Dockerfile.ocp
+      dockerfilePath: Dockerfile.ocp
     type: Docker
   triggers: []
   successfulBuildsHistoryLimit: {{ .Values.buildConfig.buildsHistoryLimits.successful }}

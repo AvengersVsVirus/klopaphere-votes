@@ -2,11 +2,11 @@ FROM openjdk:8
 
 ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 
-COPY target/lib/* /deployments/lib/
-COPY target/*-runner.jar /deployments/app.jar
+COPY lib/* /deployments/lib/
+COPY klopaphere-votes.jar /deployments/klopaphere-votes.jar
 WORKDIR /deployments
 
 EXPOSE 8080
 USER 1001
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "klopaphere-votes.jar"]

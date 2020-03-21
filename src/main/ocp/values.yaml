@@ -8,7 +8,7 @@ deploymentConfig:
       value: "klopaphere-votes"
   livenessProbe:
     enabled: true
-    path: '/health/live'
+    path: '/votes/health/live'
     port: 8080
     failureThreshold: 3
     initialDelaySeconds: 30
@@ -17,7 +17,7 @@ deploymentConfig:
     timeoutSeconds: 2
   readinessProbe:
     enabled: true
-    path: '/health/ready'
+    path: '/votes/health/ready'
     port: 8080
     failureThreshold: 3
     initialDelaySeconds: 30
