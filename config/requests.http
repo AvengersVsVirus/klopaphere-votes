@@ -8,6 +8,16 @@ Content-Type: application/json
   "availability":  "NORMAL"
 }
 
+### New Voting (OCP)
+POST https://api.klopaphere.de/votes/vote
+Content-Type: application/json
+
+{
+"product":  "Klopapier",
+"location": "53.6159766,9.9022919",
+"availability":  "NORMAL"
+}
+
 ### OpenAPI Spec
 GET http://127.0.0.1:8080/votes/openapi
 
