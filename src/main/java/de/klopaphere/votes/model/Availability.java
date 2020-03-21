@@ -1,4 +1,4 @@
-package de.klopaphere.votes;
+package de.klopaphere.votes.model;
 
 public enum Availability {
   NOTHING,
