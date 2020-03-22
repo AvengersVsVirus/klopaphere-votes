@@ -29,19 +29,19 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: make temporary folder
-      run: mkdir -p oc_deploy/deployments/lib
+      run: mkdir -p oc_deploy/tmp/lib
 
     - name: copy application files to tmp folder
-      run: cp target/lib/* oc_deploy/deployments/lib && cp target/*-runner.jar oc_deploy/deployments/app.jar
+      run: cp target/lib/* oc_deploy/tmp/lib && cp target/*-runner.jar oc_deploy/tmp/app.jar
 
     - name: copy Dockerfile to tmp folder
       run: cp src/main/docker/Dockerfile.ocp oc_deploy/
 
     - name: copy truststore to tmp folder
-      run: cp config/kafka.cert oc_deploy/deployments/kafka.cert
+      run: cp config/kafka.cert oc_deploy/tmp/kafka.cert
 
     - name: copy truststore to tmp folder
-      run: ls -al oc_deploy/deployments
+      run: ls -al oc_deploy/tmp
 
     - name: Start openshift build for application
       uses: redhat-developer/openshift-actions@v2.0
@@ -50,7 +50,7 @@ jobs:
         parameters: '{"apitoken": "${{ secrets.API_TOKEN }}", "acceptUntrustedCerts": "true"}'
         cmd: |
           'project klopaphere'
-          'start-build klopaphere-votest-test --from-dir=oc_deploy --follow'
+          'start-build klopaphere-votest-test --from-dir oc_deploy/ --follow'
 
     - name: Kubernetes toolset
       uses: stefanprodan/kube-tools@v1.3.0
