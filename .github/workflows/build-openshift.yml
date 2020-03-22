@@ -1,7 +1,7 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: Java CI with Maven
+name: Quarkus Maven Openshift build
 
 on:
   push:
@@ -14,37 +14,44 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Build a Quarkus native application
-      uses: maxday/quarkus-native-build-docker-action@1
+
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
       with:
-        outputName: application
+        java-version: 8
+
+    - name: Build the app
+      run: mvn -B package --file pom.xml
+
     - name: make temporary folder
-      run: mkdir -p oc_deploy
-    - name: copy binary to tmp folder
-      run: cp application oc_deploy/
+      run: mkdir -p oc_deploy/tmp/lib
+
+    - name: copy application files to tmp folder
+      run: cp target/lib/* oc_deploy/tmp/lib && cp target/*-runner.jar oc_deploy/tmp/app.jar
+
     - name: copy Dockerfile to tmp folder
       run: cp src/main/docker/Dockerfile.ocp oc_deploy/
+
     - name: copy truststore to tmp folder
-      run: cp config/cacerts oc_deploy/
-    - name: copy truststore to tmp folder
-      run: ls -al oc_deploy
-    - name: Start openshift build for applicaiton
+      run: cp config/kafka.cert oc_deploy/tmp/kafka.cert
+
+    - name: Start openshift build for application
       uses: redhat-developer/openshift-actions@v2.0
       with:
-        # The URL of the Openshift cluster
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
         parameters: '{"apitoken": "${{ secrets.API_TOKEN }}", "acceptUntrustedCerts": "true"}'
         cmd: |
           'project klopaphere'
-          'start-build klopaphere-votest-test --from-dir=oc_deploy --follow'
+          'start-build klopaphere-votes --from-dir oc_deploy/ --follow'
+
     - name: Kubernetes toolset
       uses: stefanprodan/kube-tools@v1.3.0
       with:
         command: helmv3 template src/main/ocp > ocp_objects.yaml
+
     - name: apply manifest to openshift
       uses: redhat-developer/openshift-actions@v2.0
       with:
-        # The URL of the Openshift cluster
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
         parameters: '{"apitoken": "${{ secrets.API_TOKEN }}", "acceptUntrustedCerts": "true"}'
         cmd: 'apply -f ocp_objects.yaml'

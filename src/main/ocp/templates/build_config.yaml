@@ -16,10 +16,10 @@ spec:
   strategy:
     dockerStrategy:
       from:
-        kind: "DockerImage"
-        name: "openjdk:8"
+        kind: "ImageStreamTag"
+        name: "ubi-minimal:latest"
       noCache: true
-      dockerfilePath: Dockerfile.deprecated
+      dockerfilePath: Dockerfile.ocp
     type: Docker
   triggers: []
   successfulBuildsHistoryLimit: {{ .Values.buildConfig.buildsHistoryLimits.successful }}
