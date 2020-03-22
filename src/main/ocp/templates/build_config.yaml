@@ -17,7 +17,7 @@ spec:
     dockerStrategy:
       from:
         kind: "ImageStreamTag"
-        name: "openjdk-8-rhel8:latest"
+        name: "ubi-minimal:latest"
       noCache: true
       dockerfilePath: Dockerfile.ocp
     type: Docker
