@@ -1,22 +1,5 @@
 [
   {
-    "name": "Shop",
-    "options": [
-      {
-        "label": "leer",
-        "value": "MUCH"
-      },
-      {
-        "label": "fast nix",
-        "value": "NORMAL"
-      },
-      {
-        "label": "voll",
-        "value": "NOTHING"
-      }
-    ]
-  },
-  {
     "name": "Klopapier",
     "options": [
       {
