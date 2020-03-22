@@ -19,15 +19,9 @@ RUN microdnf install openssl curl ca-certificates ${JAVA_PACKAGE} \
 
 ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager -XshowSettings:vm"
 
-COPY tmp/* /deployments
+COPY tmp /deployments
 
-#DEBUG
-
-RUN ls -al deployments
-
-#DEBUG
-
-RUN keytool -import -v -alias kafka-cluster -file deployments/kafka.cert -keystore /usr/local/openjdk-8/jre/lib/security/cacerts -noprompt -storepass changeit
+RUN keytool -import -v -alias kafka-cluster -file deployments/kafka.cert -keystore /etc/pki/ca-trust/extracted/java/cacerts -noprompt -storepass changeit
 
 EXPOSE 8080
 USER 1001
