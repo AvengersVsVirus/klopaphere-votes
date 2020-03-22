@@ -41,12 +41,11 @@ jobs:
       run: cp config/kafka.cert oc_deploy/deployments/kafka.cert
 
     - name: copy truststore to tmp folder
-      run: ls -al oc_deploy
+      run: ls -al oc_deploy/deployments
 
     - name: Start openshift build for application
       uses: redhat-developer/openshift-actions@v2.0
       with:
-        # The URL of the Openshift cluster
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
         parameters: '{"apitoken": "${{ secrets.API_TOKEN }}", "acceptUntrustedCerts": "true"}'
         cmd: |
