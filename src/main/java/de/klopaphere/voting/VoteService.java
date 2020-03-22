@@ -4,22 +4,14 @@ import de.klopaphere.voting.model.VoteEntity;
 import java.util.Collection;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 @Singleton
 public class VoteService {
 
   @Inject VoteRepository repository;
 
-  @Inject
-  @Channel("new-votes")
-  Emitter<VoteEntity> emitter;
-
   public VoteEntity createVote(VoteEntity voting) {
-    VoteEntity newVoting = repository.save(voting);
-    emitter.send(newVoting);
-    return newVoting;
+    return repository.save(voting);
   }
 
   public Collection<VoteEntity> getAllVotes() {

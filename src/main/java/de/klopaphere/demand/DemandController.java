@@ -1,5 +1,6 @@
-package de.klopaphere.demands;
+package de.klopaphere.demand;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -16,8 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DemandController {
 
+  @Inject DemandService service;
+
   @POST
   public Demand reportDemand(@Valid Demand demand) {
+    service.processNewDemand(demand);
     return demand;
   }
 }

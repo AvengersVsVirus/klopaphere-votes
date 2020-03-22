@@ -1,4 +1,4 @@
-package de.klopaphere.demands;
+package de.klopaphere.demand;
 
 import io.quarkus.kafka.client.serialization.ObjectMapperDeserializer;
 

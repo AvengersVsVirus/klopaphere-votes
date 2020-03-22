@@ -1,4 +1,4 @@
-package de.klopaphere.demands;
+package de.klopaphere.demand;
 
 import lombok.Builder;
 import lombok.Data;
