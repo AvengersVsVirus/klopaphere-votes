@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "product":  "Klopapier",
-  "location": "53.6159766,9.9022919",
+  "location": "53.61579662268097,9.90417719640769",
   "availability":  "NORMAL"
 }
 
