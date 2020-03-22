@@ -1,8 +1,8 @@
-package de.klopaphere.votes;
+package de.klopaphere.voting;
 
 import de.klopaphere.config.MappingConfig;
-import de.klopaphere.votes.model.Vote;
-import de.klopaphere.votes.model.VoteEntity;
+import de.klopaphere.voting.model.Vote;
+import de.klopaphere.voting.model.VoteEntity;
 import java.util.Collection;
 import org.mapstruct.Mapper;
 

@@ -1,5 +1,5 @@
 ### New Voting
-POST http://127.0.0.1:8080/votes/vote
+POST http://127.0.0.1:8080/vote
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### New Voting (OCP)
-POST https://api.klopaphere.de/votes/vote
+POST https://api.klopaphere.de/vote
 Content-Type: application/json
 
 {
@@ -19,12 +19,36 @@ Content-Type: application/json
 }
 
 ### OpenAPI Spec
-GET http://127.0.0.1:8080/votes/openapi
+GET http://127.0.0.1:8080/openapi
+
+### Swagger UI
+GET http://127.0.0.1:8080/swagger-ui
 
 ### Mock Products
-GET http://127.0.0.1:8080/votes/product
+GET http://127.0.0.1:8080/product
 
 ### Get All Votes
-GET http://127.0.0.1:8080/votes/vote
+GET http://127.0.0.1:8080/vote
+
+### New Demand
+POST http://127.0.0.1:8080/demand
+Content-Type: application/json
+
+{
+  "product":  "Klopapier",
+  "location": "53.6159766,9.9022919"
+}
+
+### GET Heatmap for product in location
+GET http://127.0.0.1:8080/heatmap/53.6159766,9.9022919/Klopapier
+
+### Send current Location
+POST http://127.0.0.1:8080/location
+Content-Type: application/json
+
+{
+  "location": "53.6159766,9.9022919",
+  "deviceToken": "myFancyDeviceToken"
+}
 
 ###

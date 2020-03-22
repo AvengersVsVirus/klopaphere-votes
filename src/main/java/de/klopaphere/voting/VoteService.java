@@ -1,6 +1,6 @@
-package de.klopaphere.votes;
+package de.klopaphere.voting;
 
-import de.klopaphere.votes.model.VoteEntity;
+import de.klopaphere.voting.model.VoteEntity;
 import java.util.Collection;
 import javax.inject.Inject;
 import javax.inject.Singleton;

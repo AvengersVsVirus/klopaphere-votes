@@ -1,6 +1,6 @@
-package de.klopaphere.votes;
+package de.klopaphere.voting;
 
-import de.klopaphere.votes.model.Vote;
+import de.klopaphere.voting.model.Vote;
 import io.quarkus.kafka.client.serialization.ObjectMapperDeserializer;
 
 public class VotingDeserializer extends ObjectMapperDeserializer<Vote> {

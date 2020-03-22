@@ -34,7 +34,7 @@ deploymentConfig:
           key: database-name
   livenessProbe:
     enabled: true
-    path: '/votes/health/live'
+    path: '/health/live'
     port: 8080
     failureThreshold: 3
     initialDelaySeconds: 30
@@ -43,7 +43,7 @@ deploymentConfig:
     timeoutSeconds: 2
   readinessProbe:
     enabled: true
-    path: '/votes/health/ready'
+    path: '/health/ready'
     port: 8080
     failureThreshold: 3
     initialDelaySeconds: 30

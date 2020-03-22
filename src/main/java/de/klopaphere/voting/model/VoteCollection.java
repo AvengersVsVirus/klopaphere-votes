@@ -1,4 +1,4 @@
-package de.klopaphere.votes.model;
+package de.klopaphere.voting.model;
 
 import java.util.Collection;
 import lombok.Builder;

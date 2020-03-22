@@ -2,10 +2,8 @@ package de.klopaphere.product;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import de.klopaphere.votes.VoteService;
 import java.io.IOException;
 import java.util.Objects;
-import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -19,9 +17,7 @@ import org.apache.commons.io.IOUtils;
 @Path("/product")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class ProductResource {
-
-  @Inject VoteService service;
+public class ProductController {
 
   @GET
   public Response mockProducts() throws IOException {
