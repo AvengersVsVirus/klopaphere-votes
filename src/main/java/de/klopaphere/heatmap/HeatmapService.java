@@ -19,7 +19,6 @@ public class HeatmapService {
 
     // update the heatmap entry for this product on this "place"
 
-
     log.info("new voting: {}", voting);
   }
 }

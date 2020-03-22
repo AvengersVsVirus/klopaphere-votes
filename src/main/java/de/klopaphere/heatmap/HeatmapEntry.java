@@ -1,10 +1,9 @@
 package de.klopaphere.heatmap;
 
 import de.klopaphere.voting.model.Availability;
+import java.time.OffsetDateTime;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.OffsetDateTime;
 
 @Data
 @Builder
