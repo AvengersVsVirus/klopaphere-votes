@@ -1,7 +1,7 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: Java CI with Maven
+name: Quarkus Maven Openshift build
 
 on:
   push:
@@ -20,11 +20,6 @@ jobs:
       with:
         java-version: 8
     
-    - name: Set up Maven
-      uses: aahmed-se/setup-maven@v3
-      with:
-        maven-version: 3.6.1
-
     - name: Build the app
       run: mvn -B package --file pom.xml
 
@@ -42,7 +37,10 @@ jobs:
 
     - name: copy truststore to tmp folder
       run: ls -al oc_deploy/tmp
-
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
     - name: Start openshift build for application
       uses: redhat-developer/openshift-actions@v2.0
       with:
@@ -50,7 +48,7 @@ jobs:
         parameters: '{"apitoken": "${{ secrets.API_TOKEN }}", "acceptUntrustedCerts": "true"}'
         cmd: |
           'project klopaphere'
-          'start-build klopaphere-votest --from-dir oc_deploy/ --follow'
+          'start-build klopaphere-votes --from-dir oc_deploy/ --follow'
 
     - name: Kubernetes toolset
       uses: stefanprodan/kube-tools@v1.3.0
@@ -60,7 +58,6 @@ jobs:
     - name: apply manifest to openshift
       uses: redhat-developer/openshift-actions@v2.0
       with:
-        # The URL of the Openshift cluster
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
         parameters: '{"apitoken": "${{ secrets.API_TOKEN }}", "acceptUntrustedCerts": "true"}'
         cmd: 'apply -f ocp_objects.yaml'
