@@ -19,7 +19,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 8
-        
+
     - name: Build the app
       run: mvn -B package --file pom.xml
 
@@ -35,12 +35,6 @@ jobs:
     - name: copy truststore to tmp folder
       run: cp config/kafka.cert oc_deploy/tmp/kafka.cert
 
-    - name: copy truststore to tmp folder
-      run: ls -al oc_deploy/tmp
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
     - name: Start openshift build for application
       uses: redhat-developer/openshift-actions@v2.0
       with:
