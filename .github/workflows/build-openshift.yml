@@ -50,7 +50,7 @@ jobs:
         parameters: '{"apitoken": "${{ secrets.API_TOKEN }}", "acceptUntrustedCerts": "true"}'
         cmd: |
           'project klopaphere'
-          'start-build klopaphere-votest-test --from-dir oc_deploy/ --follow'
+          'start-build klopaphere-votest --from-dir oc_deploy/ --follow'
 
     - name: Kubernetes toolset
       uses: stefanprodan/kube-tools@v1.3.0
