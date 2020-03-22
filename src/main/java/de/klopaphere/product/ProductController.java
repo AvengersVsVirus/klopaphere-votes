@@ -21,6 +21,8 @@ public class ProductController {
 
   @GET
   public Response mockProducts() throws IOException {
+    // find the most demanded products -> consume the demand kafka topic
+
     return Response.ok(
             IOUtils.toString(
                 Objects.requireNonNull(

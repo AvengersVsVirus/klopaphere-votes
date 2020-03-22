@@ -20,6 +20,7 @@ public class HeatmapController {
   @Path("/{location}/{product}")
   public Heatmap getHeatmap(
       @PathParam("location") String location, @PathParam("product") String product) {
+    // Find all Heatmap-Entries for given product in an area near given location
     return Heatmap.builder().build();
   }
 }

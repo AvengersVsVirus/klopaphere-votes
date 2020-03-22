@@ -11,6 +11,15 @@ public class HeatmapService {
 
   @Incoming("voting-in")
   public void handleIncommingVoting(Vote voting) {
+    // map location to "place" (e.g. supermarket)
+
+    // find earlier votings for this "place"
+
+    // aggregate this voting with earlier votings
+
+    // update the heatmap entry for this product on this "place"
+
+
     log.info("new voting: {}", voting);
   }
 }
