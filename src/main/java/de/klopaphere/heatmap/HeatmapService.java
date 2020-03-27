@@ -1,6 +1,8 @@
 package de.klopaphere.heatmap;
 
 import de.klopaphere.voting.model.Vote;
+
+import java.util.Collection;
 import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -18,7 +20,7 @@ public class HeatmapService {
   @Inject ManagedExecutor managedExecutor;
 
   @Incoming("voting-in")
-  public void handleIncommingVoting(Vote voting) {
+  public void handleIncomingVoting(Vote voting) {
     log.info("Incoming Voting: {}", voting);
     HeatmapEntry entry =
         placeService
@@ -46,18 +48,23 @@ public class HeatmapService {
             .averageAvailability(voting.getAvailability())
             .build();
 
-    managedExecutor.runAsync(
-        () -> {
-          // find earlier voting for this "place"
-          Optional<HeatmapEntryEntity> maybeEarlierEntry =
-              repository.findByProductAndGeographicCoordinate(
-                  entry.getProduct(), entry.getGeographicCoordinate());
+    managedExecutor.runAsync(() -> createOrUpdate(entry));
+  }
 
-          // create new entry or update earlier one
-          HeatmapEntryEntity update =
-              mapper.update(entry, maybeEarlierEntry.orElse(new HeatmapEntryEntity()));
-          HeatmapEntryEntity savedEntry = repository.save(update);
-          log.debug("persist new / updated heatmap-entry: {}", savedEntry);
-        });
+  public Collection<HeatmapEntryEntity> getByProduct(String product) {
+    return repository.findByProduct(product);
+  }
+
+  private void createOrUpdate(HeatmapEntry entry) {
+    // find earlier voting for this "place"
+    Optional<HeatmapEntryEntity> maybeEarlierEntry =
+        repository.findByProductAndGeographicCoordinate(
+            entry.getProduct(), entry.getGeographicCoordinate());
+
+    // create new entry or update earlier one
+    HeatmapEntryEntity update =
+        mapper.update(entry, maybeEarlierEntry.orElse(new HeatmapEntryEntity()));
+    HeatmapEntryEntity savedEntry = repository.save(update);
+    log.debug("persist new / updated heatmap-entry: {}", savedEntry);
   }
 }
