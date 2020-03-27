@@ -10,9 +10,7 @@ import lombok.Data;
 public class HeatmapEntry {
   private String product;
   private String locationDescription;
-  private String locationFormattedAddress;
-  private String locationIcon;
-  private String locationGooglePlaceId;
+  private String locationOpenStreetMapUid;
   private String geographicCoordinate;
   private Availability averageAvailability;
   private OffsetDateTime latestUpdate;

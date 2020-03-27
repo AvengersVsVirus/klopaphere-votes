@@ -2,7 +2,7 @@ version: "3"
 services:
   db:
     image: mariadb:10.3
-    container_name: moneta-mariadb
+    container_name: klopaphere-mariadb
     environment:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=pass
@@ -19,3 +19,15 @@ services:
       - "--lower_case_table_names=1"
     ports:
       - 3306:3306
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181

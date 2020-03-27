@@ -71,6 +71,10 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-spring-data-jpa</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-rest-client</artifactId>
+    </dependency>
     <!-- Java8 Date Support -->
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -81,11 +85,6 @@
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
       <version>${org.mapstruct.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.maps</groupId>
-      <artifactId>google-maps-services</artifactId>
-      <version>0.11.0</version>
     </dependency>
     <dependency>
       <groupId>org.mapstruct</groupId>
