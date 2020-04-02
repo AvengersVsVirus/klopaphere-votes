@@ -33,6 +33,10 @@
   <dependencies>
     <dependency>
       <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-orm-panache</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy</artifactId>
     </dependency>
     <dependency>
@@ -66,10 +70,6 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-spring-data-jpa</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>

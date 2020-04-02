@@ -1,9 +1,11 @@
 package de.klopaphere.place.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.ZonedDateTime;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OverpassElement {
   private String type;
   private Long id;

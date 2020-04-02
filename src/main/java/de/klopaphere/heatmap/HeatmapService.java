@@ -5,6 +5,7 @@ import de.klopaphere.voting.model.Vote;
 import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 
@@ -18,12 +19,12 @@ public class HeatmapService {
 
   @Incoming("voting-in")
   public void handleIncomingVoting(Vote voting) {
-    log.info("Incoming Voting: {}", voting);
+    log.debug("Incoming Voting: {}", voting);
 
     placeService
         .findNearPlace(voting)
-        .handleAsync(
-            (overpassElements, throwable) ->
+        .thenApply(
+            overpassElements ->
                 overpassElements.stream()
                     .findFirst()
                     .map(
@@ -44,19 +45,26 @@ public class HeatmapService {
                             .geographicCoordinate(voting.getLocation()))
                     .averageAvailability(voting.getAvailability())
                     .build())
-        .thenAcceptAsync(entry -> createOrUpdate(entry));
+        .thenAccept(this::createOrUpdate);
   }
 
-  private void createOrUpdate(HeatmapEntry entry) {
+  @Transactional
+  public void createOrUpdate(HeatmapEntry entry) {
     // find earlier voting for this "place"
     Optional<HeatmapEntryEntity> maybeEarlierEntry =
         repository.findByProductAndGeographicCoordinate(
             entry.getProduct(), entry.getGeographicCoordinate());
 
+    log.debug(
+        "found earlier entry for product '{}' at location '{}'? {}",
+        entry.getProduct(),
+        entry.getGeographicCoordinate(),
+        maybeEarlierEntry.isPresent());
+
     // create new entry or update earlier one
     HeatmapEntryEntity update =
         mapper.update(entry, maybeEarlierEntry.orElse(new HeatmapEntryEntity()));
-    HeatmapEntryEntity savedEntry = repository.save(update);
-    log.debug("persist new / updated heatmap-entry: {}", savedEntry);
+    repository.persist(update);
+    log.debug("persist new / updated heatmap-entry: {}", update);
   }
 }

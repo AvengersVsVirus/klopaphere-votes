@@ -1,6 +1,8 @@
 package de.klopaphere.voting;
 
 import de.klopaphere.voting.model.VoteEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import javax.enterprise.context.ApplicationScoped;
 
-public interface VoteRepository extends JpaRepository<VoteEntity, Long> {}
+@ApplicationScoped
+public class VoteRepository implements PanacheRepository<VoteEntity> {}

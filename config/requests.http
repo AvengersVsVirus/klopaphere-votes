@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "product":  "Klopapier",
-  "location": "53.61579662268097,9.90417719640769",
+  "location": "53.62954,9.92993",
   "availability":  "NORMAL"
 }
 
@@ -13,9 +13,9 @@ POST https://api.klopaphere.de/vote
 Content-Type: application/json
 
 {
-"product":  "Klopapier",
-"location": "53.6159766,9.9022919",
-"availability":  "NORMAL"
+  "product":  "Klopapier",
+  "location": "53.62954,9.92993",
+  "availability":  "NORMAL"
 }
 
 ### OpenAPI Spec
@@ -36,7 +36,7 @@ Content-Type: application/json
 
 {
   "product":  "Klopapier",
-  "location": "53.6159766,9.9022919"
+  "location": "53.62954,9.92993",
 }
 
 ### GET Heatmap for product in location
@@ -47,7 +47,7 @@ POST http://127.0.0.1:8080/location
 Content-Type: application/json
 
 {
-  "location": "53.6159766,9.9022919",
+  "location": "53.62954,9.92993",
   "deviceToken": "myFancyDeviceToken"
 }
 
